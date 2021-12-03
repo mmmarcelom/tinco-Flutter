@@ -33,7 +33,10 @@ class _TelaPartidaState extends State<TelaPartida> {
     final arquivo = File("${diretorio.path}/partidas.json");
     String dados = await arquivo.readAsString();
     List<dynamic> objetos = json.decode(dados);
+    print(objetos);
+    _partida.calcularVencedor();
     objetos.add(_partida.toJson());
+    print(objetos);
 
     await arquivo.writeAsString(json.encode(objetos));
     Navigator.pop(context);
@@ -76,7 +79,7 @@ class _TelaPartidaState extends State<TelaPartida> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    child: Text("Pontar (novo)"),
+                    child: Text("Pontuar"),
                     onPressed: () {
                       Navigator.push(
                           context,

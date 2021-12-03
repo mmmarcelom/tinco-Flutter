@@ -32,11 +32,9 @@ class _TelaPontuarState extends State<TelaPontuar> {
     widget.partida.jogadores.forEach((jogador) => jogador.pontuar());
 
     final diretorio = await getApplicationDocumentsDirectory();
-    print("Atualizando partida: " + widget.partida.toString());
     File("${diretorio.path}/partidaAtual.json").writeAsString(json.encode(widget.partida.toJson()));
 
     Navigator.pop(context);
-
   }
 
   @override
