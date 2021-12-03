@@ -6,6 +6,8 @@ import 'package:contador_tinco/modelos/partida.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'TelaPontuar.dart';
+
 class TelaPartida extends StatefulWidget {
   const TelaPartida({Key? key}) : super(key: key);
 
@@ -24,24 +26,6 @@ class _TelaPartidaState extends State<TelaPartida> {
       print("Recuperando partida: " + dados);
       return Partida.fromJson(json.decode(dados));
     }
-
-
-    _pontuar() async{
-
-    _partida.jogadores[0].placar = _partida.jogadores[0].placar + 2;
-    _partida.jogadores[1].placar = _partida.jogadores[1].placar - 1;
-    _partida.jogadores[2].placar = _partida.jogadores[2].placar + 1;
-    _partida.jogadores[3].placar = _partida.jogadores[3].placar + 0;
-
-    setState(() {
-      _partida.rodadas = _partida.rodadas +1;
-    });
-
-    final diretorio = await getApplicationDocumentsDirectory();
-    print("Atualizando partida: " + _partida.toString());
-    File("${diretorio.path}/partidaAtual.json").writeAsString(json.encode(_partida.toJson()));
-
-  }
 
   _encerrar() async {
 
@@ -87,8 +71,21 @@ class _TelaPartidaState extends State<TelaPartida> {
                   return const Center(child: CircularProgressIndicator());
                 }
             }),
-            ElevatedButton(child: Text("Pontuar"), onPressed: _pontuar ),
-            ElevatedButton(child: Text("Encerrar"), onPressed: _encerrar )
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    child: Text("Pontar (novo)"),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  TelaPontuar(partida: _partida))).then((_) => setState(() {}));
+                    }),
+                ElevatedButton(child: Text("Encerrar"), onPressed: _encerrar )
+              ])
           ]
     )));
   }

@@ -26,6 +26,9 @@ class Partida {
 class Jogador{
   String nome;
   int placar;
+  late bool trinco;
+  late bool set;
+  late bool medalhao;
 
   Jogador({required this.nome, required this.placar});
 
@@ -38,4 +41,25 @@ class Jogador{
     "nome": nome,
     "placar": placar,
   };
+
+  pontuar(){
+
+    int pontos = 0;
+
+    if(medalhao && set){
+      pontos++;
+    }
+
+    if(medalhao == false){
+      pontos--;
+    }
+
+    if(trinco == true){
+      pontos--;
+    }
+
+    placar = placar + pontos;
+    print("$nome: ${placar.toString()}");
+  }
+
 }
